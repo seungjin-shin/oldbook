@@ -10,9 +10,17 @@ public class SaleArticle {
 	private String method;
 	private String image;
 	private String contents;
-	
+	private String num;
+
 	public SaleArticle(){}
 	
+	public String getnum() {
+		return num;
+	}
+	
+	public void setnum(String num) {
+		this.num = num;
+	}
 	public String getImage() {
 		return image;
 	}

@@ -7,6 +7,14 @@
 		<servlet-name>OldBook</servlet-name>
 		<url-pattern>/oldbook</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>viewImg</servlet-name>
+		<servlet-class>test.viewImg</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>viewImg</servlet-name>
+		<url-pattern>/viewimg</url-pattern>
+	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>SaveArticle</servlet-name>

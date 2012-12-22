@@ -36,6 +36,8 @@ public class GetArticle extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
+		int entityLen = 0;
+		int i = 0;
 		String ID = req.getParameter("ID");
 
 		DatastoreService datastore = DatastoreServiceFactory
@@ -43,15 +45,20 @@ public class GetArticle extends HttpServlet {
 
 		Query query = new Query("sArticle").addSort("date",Query.SortDirection.DESCENDING);
 		List<Entity> entities = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(MAXARTICLENUM));
+		
+		resp.getWriter().print("{\"myBookList\":{\"myBikeBoard\":[");
+		
+		entityLen = entities.size();
 		if (entities.isEmpty()) {
 			resp.getWriter().print(ID + "null");
 		} else {
 			for (Entity entity : entities) {
 				if (ID.equals(entity.getProperty("ID").toString())) {
+					i++;
 					String jsonString;
 					OldBookGson myGson = new OldBookGson();
 					SaleArticle article = new SaleArticle();
-
+					
 					article.setID(entity.getProperty("ID").toString());
 					article.setTitle(entity.getProperty("title").toString());
 					article.setPublisher(entity.getProperty("publisher")
@@ -60,14 +67,18 @@ public class GetArticle extends HttpServlet {
 					article.setCondition(entity.getProperty("condition")
 							.toString());
 					article.setMethod(entity.getProperty("method").toString());
-
+					article.setContents(entity.getProperty("contents").toString());
+					article.setImage(entity.getProperty("image").toString());
+					
 					jsonString = myGson.toJson(article);
-					resp.setCharacterEncoding("euc-kr");
+					resp.setCharacterEncoding("UTF-8");
 					resp.getWriter().print(jsonString);
-					resp.getWriter().println("");
+					if(i != entityLen)
+						resp.getWriter().print(",");
 				}
 			}
 		}
+		resp.getWriter().print("]}}");
 
 	}
 }

@@ -1,31 +1,20 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.google.appengine.api.users.User" %>
-<%@ page import="com.google.appengine.api.users.UserService" %>
-<%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
-&lt;html>
-
-  <body>
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory" %>
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
 
 <%
-    UserService userService = UserServiceFactory.getUserService();
-    User user = userService.getCurrentUser();
-    if (user != null) {
-      pageContext.setAttribute("user", user);
-%>
-<p>Hello, ${fn:escapeXml(user.nickname)}! (You can
-<a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
-<%
-    } else {
-%>
-<p>Hello!dddd
-<a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-to include your name with greetings you post.</p>
-<%
-    }
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 %>
 
-  </body>
+
+<html>
+    <head>
+        <title>Upload Test</title>
+    </head>
+    <body>
+        <form action="<%= blobstoreService.createUploadUrl("/saveArticle") %>" method="post" enctype="multipart/form-data">
+            <input type="text" name="ID">
+            <input type="file" name="image">
+            <input type="submit" value="Submit">
+        </form>
+    </body>
 </html>
