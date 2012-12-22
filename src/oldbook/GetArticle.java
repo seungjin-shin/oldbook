@@ -1,4 +1,5 @@
 package oldbook;
+
 import gson.Member;
 import gson.OldBookGson;
 import gson.SaleArticle;
@@ -31,38 +32,42 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
 public class GetArticle extends HttpServlet {
+	private final int MAXARTICLENUM = 50;
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
-		
-		String articleNum = req.getParameter("articleNum");
-		
-		String keyStr = "article";
-		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	    Key articleKey = KeyFactory.createKey("Article", keyStr);
+			throws IOException {
+		String ID = req.getParameter("ID");
 
-	    Query query = new Query("Article", articleKey);
-		
-	    Entity entity = datastore.prepare(query).asSingleEntity();
-		
-	    if (entity != null) {
-	    	String jsonString;
-			OldBookGson myGson = new OldBookGson();
-			SaleArticle article = new SaleArticle();
-			
-			article.setArticleNum(entity.getProperty("articleNum").toString());
-			article.setID(entity.getProperty("ID").toString());
-			article.setTitle(entity.getProperty("title").toString());
-			article.setPublisher(entity.getProperty("publisher").toString());
-			article.setPrice(entity.getProperty("price").toString());
-			article.setCondition(entity.getProperty("condition").toString());
-			article.setMethod(entity.getProperty("method").toString());
-			
-			jsonString = myGson.toJson(article);
-			resp.setCharacterEncoding("euc-kr");
-			resp.getWriter().print(jsonString);
-	    }
-	    else
-	    	resp.getWriter().print(articleNum + "null");
-	    	
-}
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+
+		Query query = new Query("sArticle").addSort("date",Query.SortDirection.DESCENDING);
+		List<Entity> entities = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(MAXARTICLENUM));
+		if (entities.isEmpty()) {
+			resp.getWriter().print(ID + "null");
+		} else {
+			for (Entity entity : entities) {
+				if (ID.equals(entity.getProperty("ID").toString())) {
+					String jsonString;
+					OldBookGson myGson = new OldBookGson();
+					SaleArticle article = new SaleArticle();
+
+					article.setID(entity.getProperty("ID").toString());
+					article.setTitle(entity.getProperty("title").toString());
+					article.setPublisher(entity.getProperty("publisher")
+							.toString());
+					article.setPrice(entity.getProperty("price").toString());
+					article.setCondition(entity.getProperty("condition")
+							.toString());
+					article.setMethod(entity.getProperty("method").toString());
+
+					jsonString = myGson.toJson(article);
+					resp.setCharacterEncoding("euc-kr");
+					resp.getWriter().print(jsonString);
+					resp.getWriter().println("");
+				}
+			}
+		}
+
+	}
 }

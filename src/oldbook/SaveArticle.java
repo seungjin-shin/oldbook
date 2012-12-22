@@ -36,68 +36,30 @@ public class SaveArticle extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
 
-	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	String keyStr = "article";
-	Key articleKey = KeyFactory.createKey("Article", keyStr);
-	
-//	Query query = new Query("Article", articleKey).addSort("date", Query.SortDirection.DESCENDING);
-//	List<Entity> greetings = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(5));
-//	    if (greetings.isEmpty()) {
-//	    	resp.getWriter().print("empty");
-//	    } else {
-//	        for (Entity greeting : greetings) {
-//	        	String jsonString;
-//				OldBookGson myGson = new OldBookGson();
-//				SaleArticle article = new SaleArticle();
-//				
-//				article.setArticleNum(greeting.getProperty("articleNum").toString());
-//				article.setID(greeting.getProperty("ID").toString());
-//				article.setTitle(greeting.getProperty("title").toString());
-//				article.setPublisher(greeting.getProperty("publisher").toString());
-//				article.setPrice(greeting.getProperty("price").toString());
-//				article.setStatus(greeting.getProperty("status").toString());
-//				article.setMethod(greeting.getProperty("method").toString());
-//				
-//				jsonString = myGson.toJson(article);
-//				resp.setCharacterEncoding("euc-kr");
-//				resp.getWriter().print(jsonString);
-//	        	
-//	        }
-//	    }
-    
-//    if (tmpEntity == null) {
-//    	articleNum = "1";
-//    }
-//    else{
-//    	String tmpStr;
-//    	int tmpInt;
-//    	tmpStr = tmpEntity.getProperty("articleNum").toString();
-//    	tmpInt = Integer.parseInt(tmpStr) + 1;
-//    	articleNum = tmpInt + "";
-//    }
+	String keyStr = "sArticle";
+	Key articleKey = KeyFactory.createKey("sArticle", keyStr);
 	    
     String ID = req.getParameter("ID");
     String title = req.getParameter("title");
     String author = req.getParameter("author");
     String publisher = req.getParameter("publisher");
     String price = req.getParameter("price");
-    String status = req.getParameter("status");
+    String condition = req.getParameter("condition");
     String method = req.getParameter("method");
     Date date = new Date();
     
-    Entity entity = new Entity("Article", articleKey);
-    //entity.setProperty("articleNum", articleNum);
+    Entity entity = new Entity("sArticle", articleKey);
     entity.setProperty("ID", ID);
     entity.setProperty("title", title);
     entity.setProperty("author", author);
     entity.setProperty("publisher", publisher);
     entity.setProperty("price", price);
-    entity.setProperty("status", status);
+    entity.setProperty("condition", condition);
     entity.setProperty("method", method);
     entity.setProperty("date", date);
     
-    DatastoreService datastore2 = DatastoreServiceFactory.getDatastoreService();
-    datastore2.put(entity);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(entity);
     
     resp.setCharacterEncoding("euc-kr");
 	resp.getWriter().print("succeed save");

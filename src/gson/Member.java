@@ -7,12 +7,6 @@ public class Member {
 	private String passwd;
 	
 	public Member(){}
-	public Member(String id, String n, String ph, String p){
-		this.ID = id;
-		this.name = n;
-		this.phone = ph;
-		this.passwd = p;
-	}
 	
 	public String getID() {
 		return ID;

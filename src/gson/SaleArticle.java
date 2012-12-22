@@ -1,7 +1,6 @@
 package gson;
 
 public class SaleArticle {
-	private String articleNum;
 	private String ID;
 	private String title;
 	private String author;
@@ -9,24 +8,23 @@ public class SaleArticle {
 	private String price;
 	private String condition;
 	private String method;
+	private String image;
+	private String contents;
 	
 	public SaleArticle(){}
-	public SaleArticle(String n, String id, String t, String a, String ps, String p, String c, String m){
-		this.articleNum = n;
-		this.ID = id;
-		this.title = t;
-		this.author = a;
-		this.publisher = ps;
-		this.price = p;
-		this.condition = c;
-		this.method = m;
+	
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
-	public String getArticleNum() {
-		return articleNum;
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
-	public void setArticleNum(String articleNum) {
-		this.articleNum = articleNum;
+	public String getContents() {
+		return contents;
 	}
 	public String getID() {
 		return ID;
@@ -58,7 +56,7 @@ public class SaleArticle {
 	public void setPrice(String price) {
 		this.price = price;
 	}
-	public String getStatus() {
+	public String getCondition() {
 		return condition;
 	}
 	public void setCondition(String condition) {
