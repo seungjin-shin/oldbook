@@ -54,7 +54,7 @@ public class GetArticle extends HttpServlet {
 			article.setTitle(entity.getProperty("title").toString());
 			article.setPublisher(entity.getProperty("publisher").toString());
 			article.setPrice(entity.getProperty("price").toString());
-			article.setStatus(entity.getProperty("status").toString());
+			article.setCondition(entity.getProperty("condition").toString());
 			article.setMethod(entity.getProperty("method").toString());
 			
 			jsonString = myGson.toJson(article);

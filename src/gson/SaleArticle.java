@@ -7,18 +7,18 @@ public class SaleArticle {
 	private String author;
 	private String publisher;
 	private String price;
-	private String status;
+	private String condition;
 	private String method;
 	
 	public SaleArticle(){}
-	public SaleArticle(String n, String id, String t, String a, String ps, String p, String s, String m){
+	public SaleArticle(String n, String id, String t, String a, String ps, String p, String c, String m){
 		this.articleNum = n;
 		this.ID = id;
 		this.title = t;
 		this.author = a;
 		this.publisher = ps;
 		this.price = p;
-		this.status = s;
+		this.condition = c;
 		this.method = m;
 	}
 	
@@ -59,10 +59,10 @@ public class SaleArticle {
 		this.price = price;
 	}
 	public String getStatus() {
-		return status;
+		return condition;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setCondition(String condition) {
+		this.condition = condition;
 	}
 	public String getMethod() {
 		return method;
