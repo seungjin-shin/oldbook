@@ -5,20 +5,34 @@ import gson.OldBookGson;
 import gson.SaleArticle;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Date;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import OldBookManager.OldBookManager;
+import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import java.util.List;
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 public class GetAllArticle extends HttpServlet {
-	private final int MAXARTICLENUM = 5000;
+	private final int MAXARTICLENUM = 50;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
@@ -33,7 +47,7 @@ public class GetAllArticle extends HttpServlet {
 		List<Entity> entities = datastore.prepare(query).asList(
 				FetchOptions.Builder.withLimit(MAXARTICLENUM));
 
-		//resp.getWriter().print("{\"myBookList\":{\"myBikeBoard\":[");
+		resp.getWriter().print("{\"myBookList\":{\"myBikeBoard\":[");
 
 		entityLen = entities.size();
 		if (entities.isEmpty()) {
@@ -61,7 +75,7 @@ public class GetAllArticle extends HttpServlet {
 					resp.getWriter().print(",");
 			}
 		}
-	//	resp.getWriter().print("]}}");
-	}
+		resp.getWriter().print("]}}");
 
+	}
 }
