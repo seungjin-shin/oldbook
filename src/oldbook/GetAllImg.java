@@ -24,7 +24,7 @@ public class GetAllImg extends HttpServlet {
 		int entityLen = 0;
 		int i = 0;
 
-		resp.setCharacterEncoding("euc-kr");
+		resp.setCharacterEncoding("UTF-8");
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
 

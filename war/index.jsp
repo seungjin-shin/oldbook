@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=EUC-KR" language="java" %>
 <%@ page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory" %>
 <%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
 
@@ -15,6 +15,15 @@
     </head>
     <body>
         <form action="<%= blobstoreService.createUploadUrl("/saveImg") %>" method="post" enctype="multipart/form-data">
+
+			<!-- <input type="text" name="title" >
+			<input type="text" name="author" >
+			<input type="text" name="publisher">
+			<input type="text" name="price" >
+			<input type="text" name="condition" >
+			<input type="text" name="method" >
+			<input type="text" name="contents" >-->
+
             <input type="text" name="num" value="<%=num%>">
             <input type="text" name="ID" value="<%=ID%>">
             <input type="file" name="image">

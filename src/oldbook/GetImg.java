@@ -71,7 +71,7 @@ public class GetImg extends HttpServlet {
 
 				img.setNum(entity.getProperty("num").toString());
 				img.setImage(entity.getProperty("image").toString());
-
+				img.setID(entity.getProperty("ID").toString());
 				jsonString = myGson.toJson(img);
 				resp.getWriter().print(jsonString);
 				if (i != count)

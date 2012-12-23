@@ -70,6 +70,7 @@ public class GetArticle extends HttpServlet {
 				
 				article.setNum(entity.getProperty("num").toString());
 				article.setID(entity.getProperty("ID").toString());
+				article.setAuthor(entity.getProperty("author").toString());
 				article.setTitle(entity.getProperty("title").toString());
 				article.setPublisher(entity.getProperty("publisher")
 						.toString());

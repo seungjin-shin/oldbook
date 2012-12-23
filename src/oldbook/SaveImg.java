@@ -50,7 +50,7 @@ public class SaveImg extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		resp.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("euc-kr");
 		
 		Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
 		BlobKey blobKey = blobs.get("image");

@@ -63,6 +63,7 @@ public class GetAllArticle extends HttpServlet {
 				article.setNum(entity.getProperty("num").toString());
 				article.setID(entity.getProperty("ID").toString());
 				article.setTitle(entity.getProperty("title").toString());
+				article.setAuthor(entity.getProperty("author").toString());
 				article.setPublisher(entity.getProperty("publisher").toString());
 				article.setPrice(entity.getProperty("price").toString());
 				article.setCondition(entity.getProperty("condition").toString());
