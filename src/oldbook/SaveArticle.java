@@ -45,43 +45,17 @@ import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
 public class SaveArticle extends HttpServlet {
-	private String num;
-	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-
-
+	
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		resp.setCharacterEncoding("euc-kr");
+		resp.setCharacterEncoding("UTF-8");
 		
-		Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
-		BlobKey blobKey = blobs.get("image");
-		
-		DatastoreService datastore = DatastoreServiceFactory
-				.getDatastoreService();
-
-		Query query = new Query("sArticle").addSort("date",
-				Query.SortDirection.DESCENDING);
-		List<Entity> entities = datastore.prepare(query).asList(
-				FetchOptions.Builder.withLimit(1));
-		if (entities.isEmpty()) {
-			resp.getWriter().print("empty");
-			num = "1";
-		} else {
-			for (Entity entity : entities) {
-				String tmpStr;
-				int tmpInt;
-				tmpStr = entity.getProperty("num").toString();
-				tmpInt = Integer.parseInt(tmpStr) + 1;
-				num = tmpInt + "";
-				resp.getWriter().print("now is " + num);
-			}
-		}
-
 		String keyStr = "sArticle";
 		Key articleKey = KeyFactory.createKey("sArticle", keyStr);
-
+		
+		String num = req.getParameter("num");
 		String ID = req.getParameter("ID");
 		String title = req.getParameter("title");
 		String author = req.getParameter("author");
@@ -89,7 +63,6 @@ public class SaveArticle extends HttpServlet {
 		String price = req.getParameter("price");
 		String condition = req.getParameter("condition");
 		String method = req.getParameter("method");
-		String image = blobKey.getKeyString();
 		String contents = req.getParameter("contents");
 		Date date = new Date();
 
@@ -103,14 +76,13 @@ public class SaveArticle extends HttpServlet {
 		entity.setProperty("condition", condition);
 		entity.setProperty("method", method);
 		entity.setProperty("date", date);
-		entity.setProperty("image", image);
 		entity.setProperty("contents", contents);
 
-		DatastoreService datastore2 = DatastoreServiceFactory
+		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
-		datastore2.put(entity);
+		datastore.put(entity);
 
 		
-		resp.getWriter().print("succeed save");
+		resp.getWriter().print("succeed save contents");
 	}
 }

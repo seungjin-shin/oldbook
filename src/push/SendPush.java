@@ -15,17 +15,16 @@ public class SendPush extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		resp.getWriter().print("4debug");
 		Sender sender = new Sender("696231272879");  //구글 코드에서 발급받은 서버 키
-		//resp.getWriter().print("4debug");
-//		   Message msg = new Message.Builder()
-//		   					.addData("dd", "dd")
-//                            .build();
-//
-//
-//		   //푸시 전송. 파라미터는 푸시 내용, 보낼 단말의 id, 마지막은 잘 모르겠음
-//
-//		   Result result = sender.send(msg, "APA91bHzd3eOAbp2Ye3vZpwxk0U8qCcfHRECla_OGJeiWK4jcxA-1lvIBEH26TrC5bVs3ulRMYhiXHGCLMOY8N0W2FhdQDK7InykGRidODvFSN-0vbjd7pm1KjZdUmSSIQzP-sK7aPVX", 5);
+		   Message msg = new Message.Builder()
+		   					.addData("dd", "dd")
+                            .build();
+
+		   resp.getWriter().print("4debug");
+
+		   //푸시 전송. 파라미터는 푸시 내용, 보낼 단말의 id, 마지막은 잘 모르겠음
+
+		   //Result result = sender.send(msg, "APA91bHzd3eOAbp2Ye3vZpwxk0U8qCcfHRECla_OGJeiWK4jcxA-1lvIBEH26TrC5bVs3ulRMYhiXHGCLMOY8N0W2FhdQDK7InykGRidODvFSN-0vbjd7pm1KjZdUmSSIQzP-sK7aPVX", 5);
 //
 //
 //		   //결과 처리

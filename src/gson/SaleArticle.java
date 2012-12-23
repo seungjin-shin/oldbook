@@ -8,24 +8,17 @@ public class SaleArticle {
 	private String price;
 	private String condition;
 	private String method;
-	private String image;
 	private String contents;
 	private String num;
 
 	public SaleArticle(){}
 	
-	public String getnum() {
+	public String getNum() {
 		return num;
 	}
 	
-	public void setnum(String num) {
+	public void setNum(String num) {
 		this.num = num;
-	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
 	}
 	
 	public void setContents(String contents) {

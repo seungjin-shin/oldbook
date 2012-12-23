@@ -48,6 +48,14 @@
 		<servlet-name>SaveImg</servlet-name>
 		<url-pattern>/saveImg</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>GetNum</servlet-name>
+		<servlet-class>oldbook.GetNum</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetNum</servlet-name>
+		<url-pattern>/getNum</url-pattern>
+	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>SendPush</servlet-name>

@@ -3,6 +3,7 @@ package oldbook;
 import gson.Member;
 import gson.OldBookGson;
 import gson.SaleArticle;
+import gson.SaleImg;
 
 import java.io.IOException;
 import java.util.Date;
@@ -31,50 +32,53 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
-public class GetAllArticle extends HttpServlet {
-	private final int MAXARTICLENUM = 500;
-
+public class GetImg extends HttpServlet {
+	private final int MAXARTICLENUM = 50;
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		int entityLen = 0;
+		int count = 0;
 		int i = 0;
+		String ID = req.getParameter("ID");
 
 		resp.setCharacterEncoding("UTF-8");
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
 
-		Query query = new Query("sArticle").addSort("date",
-				Query.SortDirection.DESCENDING);
-		List<Entity> entities = datastore.prepare(query).asList(
-				FetchOptions.Builder.withLimit(MAXARTICLENUM));
-
+		Query query = new Query("Image").addSort("date",Query.SortDirection.DESCENDING);
+		List<Entity> entities = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(MAXARTICLENUM));
+		
 		resp.getWriter().print("{\"myBookList\":{\"myBikeBoard\":[");
-
-		entityLen = entities.size();
+		
 		if (entities.isEmpty()) {
-			resp.getWriter().print("null");
+			resp.getWriter().print(ID + "null");
 		} else {
 			for (Entity entity : entities) {
+				if (ID.equals(entity.getProperty("ID").toString())) {
+					count++;
+				}
+			}
+		}
+		
+		entities = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(MAXARTICLENUM));
+		
+		for (Entity entity : entities) {
+			if (ID.equals(entity.getProperty("ID").toString())) {
 				i++;
 				String jsonString;
 				OldBookGson myGson = new OldBookGson();
-				SaleArticle article = new SaleArticle();
+				SaleImg img = new SaleImg();
 
-				article.setNum(entity.getProperty("num").toString());
-				article.setID(entity.getProperty("ID").toString());
-				article.setTitle(entity.getProperty("title").toString());
-				article.setPublisher(entity.getProperty("publisher").toString());
-				article.setPrice(entity.getProperty("price").toString());
-				article.setCondition(entity.getProperty("condition").toString());
-				article.setMethod(entity.getProperty("method").toString());
-				article.setContents(entity.getProperty("contents").toString());
+				img.setNum(entity.getProperty("num").toString());
+				img.setImage(entity.getProperty("image").toString());
 
-				jsonString = myGson.toJson(article);
+				jsonString = myGson.toJson(img);
 				resp.getWriter().print(jsonString);
-				if (i != entityLen)
+				if (i != count)
 					resp.getWriter().print(",");
 			}
 		}
+		
 		resp.getWriter().print("]}}");
 
 	}

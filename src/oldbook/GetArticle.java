@@ -40,6 +40,7 @@ public class GetArticle extends HttpServlet {
 		int i = 0;
 		String ID = req.getParameter("ID");
 
+		resp.setCharacterEncoding("UTF-8");
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
 
@@ -67,6 +68,7 @@ public class GetArticle extends HttpServlet {
 				OldBookGson myGson = new OldBookGson();
 				SaleArticle article = new SaleArticle();
 				
+				article.setNum(entity.getProperty("num").toString());
 				article.setID(entity.getProperty("ID").toString());
 				article.setTitle(entity.getProperty("title").toString());
 				article.setPublisher(entity.getProperty("publisher")
@@ -76,10 +78,8 @@ public class GetArticle extends HttpServlet {
 						.toString());
 				article.setMethod(entity.getProperty("method").toString());
 				article.setContents(entity.getProperty("contents").toString());
-				article.setImage(entity.getProperty("image").toString());
 				
 				jsonString = myGson.toJson(article);
-				resp.setCharacterEncoding("UTF-8");
 				resp.getWriter().print(jsonString);
 				if(i != count)
 					resp.getWriter().print(",");

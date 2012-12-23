@@ -50,11 +50,27 @@ public class SaveImg extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		resp.setCharacterEncoding("euc-kr");
+		resp.setCharacterEncoding("UTF-8");
 		
 		Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
 		BlobKey blobKey = blobs.get("image");
 		
-		resp.getWriter().print("succeed save");
+		String keyStr = "Image";
+		Key articleKey = KeyFactory.createKey("Image", keyStr);
+		
+		String num = req.getParameter("num");
+		String image = blobKey.getKeyString();
+		Date date = new Date();
+
+		Entity entity = new Entity("Image", articleKey);
+		entity.setProperty("num", num);
+		entity.setProperty("image", image);
+		entity.setProperty("date", date);
+
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+		datastore.put(entity);
+		
+		resp.getWriter().print("succeed save Img");
 	}
 }
