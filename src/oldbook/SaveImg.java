@@ -44,11 +44,8 @@ import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
-public class SaveArticle extends HttpServlet {
-	private String num;
+public class SaveImg extends HttpServlet {
 	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-
-
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -57,59 +54,6 @@ public class SaveArticle extends HttpServlet {
 		
 		Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
 		BlobKey blobKey = blobs.get("image");
-		
-		DatastoreService datastore = DatastoreServiceFactory
-				.getDatastoreService();
-
-		Query query = new Query("sArticle").addSort("date",
-				Query.SortDirection.DESCENDING);
-		List<Entity> entities = datastore.prepare(query).asList(
-				FetchOptions.Builder.withLimit(1));
-		if (entities.isEmpty()) {
-			resp.getWriter().print("empty");
-			num = "1";
-		} else {
-			for (Entity entity : entities) {
-				String tmpStr;
-				int tmpInt;
-				tmpStr = entity.getProperty("num").toString();
-				tmpInt = Integer.parseInt(tmpStr) + 1;
-				num = tmpInt + "";
-				resp.getWriter().print("now is " + num);
-			}
-		}
-
-		String keyStr = "sArticle";
-		Key articleKey = KeyFactory.createKey("sArticle", keyStr);
-
-		String ID = req.getParameter("ID");
-		String title = req.getParameter("title");
-		String author = req.getParameter("author");
-		String publisher = req.getParameter("publisher");
-		String price = req.getParameter("price");
-		String condition = req.getParameter("condition");
-		String method = req.getParameter("method");
-		String image = blobKey.getKeyString();
-		String contents = req.getParameter("contents");
-		Date date = new Date();
-
-		Entity entity = new Entity("sArticle", articleKey);
-		entity.setProperty("num", num);
-		entity.setProperty("ID", ID);
-		entity.setProperty("title", title);
-		entity.setProperty("author", author);
-		entity.setProperty("publisher", publisher);
-		entity.setProperty("price", price);
-		entity.setProperty("condition", condition);
-		entity.setProperty("method", method);
-		entity.setProperty("date", date);
-		entity.setProperty("image", image);
-		entity.setProperty("contents", contents);
-
-		DatastoreService datastore2 = DatastoreServiceFactory
-				.getDatastoreService();
-		datastore2.put(entity);
-
 		
 		resp.getWriter().print("succeed save");
 	}

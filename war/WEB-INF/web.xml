@@ -40,31 +40,23 @@
 		<servlet-name>GetAllArticle</servlet-name>
 		<url-pattern>/getAllArticle</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>SaveImg</servlet-name>
+		<servlet-class>oldbook.SaveImg</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SaveImg</servlet-name>
+		<url-pattern>/saveImg</url-pattern>
+	</servlet-mapping>
 	
 	<servlet>
-        <servlet-name>SubscriptionServlet</servlet-name>
-        <servlet-class>push.SubscriptionServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>SubscriptionServlet</servlet-name>
-        <url-pattern>/_ah/xmpp/subscription/subscribe/</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>PresenceServlet</servlet-name>
-        <servlet-class>push.PresenceServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>PresenceServlet</servlet-name>
-        <url-pattern>/_ah/xmpp/presence/available/</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>MessageServlet</servlet-name>
-        <servlet-class>push.MessageServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MessageServlet</servlet-name>
-        <url-pattern>/_ah/xmpp/message/chat/</url-pattern>
-    </servlet-mapping>
+		<servlet-name>SendPush</servlet-name>
+		<servlet-class>push.SendPush</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SendPush</servlet-name>
+		<url-pattern>/sendPush</url-pattern>
+	</servlet-mapping>
 	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
@@ -78,6 +70,7 @@
    <param-value/>
   </init-param>
  </servlet>
+ 
  <servlet-mapping>
   <servlet-name>SystemServiceServlet</servlet-name>
   <url-pattern>/_ah/spi/*</url-pattern>

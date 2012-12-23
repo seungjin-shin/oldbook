@@ -11,7 +11,7 @@
         <title>Upload Test</title>
     </head>
     <body>
-        <form action="<%= blobstoreService.createUploadUrl("/saveArticle") %>" method="post" enctype="multipart/form-data">
+        <form action="<%= blobstoreService.createUploadUrl("/saveImg") %>" method="post" enctype="multipart/form-data">
             <input type="text" name="ID">
             <input type="text" name="title">
             <input type="text" name="author">
