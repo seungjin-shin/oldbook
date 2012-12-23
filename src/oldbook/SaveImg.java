@@ -59,11 +59,13 @@ public class SaveImg extends HttpServlet {
 		Key articleKey = KeyFactory.createKey("Image", keyStr);
 		
 		String num = req.getParameter("num");
+		String ID = req.getParameter("ID");
 		String image = blobKey.getKeyString();
 		Date date = new Date();
 
 		Entity entity = new Entity("Image", articleKey);
 		entity.setProperty("num", num);
+		entity.setProperty("ID", ID);
 		entity.setProperty("image", image);
 		entity.setProperty("date", date);
 

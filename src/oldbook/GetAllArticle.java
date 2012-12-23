@@ -48,7 +48,7 @@ public class GetAllArticle extends HttpServlet {
 		List<Entity> entities = datastore.prepare(query).asList(
 				FetchOptions.Builder.withLimit(MAXARTICLENUM));
 
-		resp.getWriter().print("{\"myBookList\":{\"myBikeBoard\":[");
+		resp.getWriter().print("{\"myBikeList\":{\"myBikeBoard\":[");
 
 		entityLen = entities.size();
 		if (entities.isEmpty()) {

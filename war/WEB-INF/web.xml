@@ -7,14 +7,6 @@
 		<servlet-name>OldBook</servlet-name>
 		<url-pattern>/oldbook</url-pattern>
 	</servlet-mapping>
-	<servlet>
-		<servlet-name>viewImg</servlet-name>
-		<servlet-class>test.viewImg</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>viewImg</servlet-name>
-		<url-pattern>/viewimg</url-pattern>
-	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>SaveArticle</servlet-name>
@@ -56,6 +48,22 @@
 		<servlet-name>GetNum</servlet-name>
 		<url-pattern>/getNum</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>GetAllImg</servlet-name>
+		<servlet-class>oldbook.GetAllImg</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetAllImg</servlet-name>
+		<url-pattern>/getAllImg</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>GetImg</servlet-name>
+		<servlet-class>oldbook.GetImg</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetImg</servlet-name>
+		<url-pattern>/getImg</url-pattern>
+	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>SendPush</servlet-name>
@@ -64,6 +72,15 @@
 	<servlet-mapping>
 		<servlet-name>SendPush</servlet-name>
 		<url-pattern>/sendPush</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>viewImg</servlet-name>
+		<servlet-class>test.viewImg</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>viewImg</servlet-name>
+		<url-pattern>/viewImg</url-pattern>
 	</servlet-mapping>
 	
 	<welcome-file-list>

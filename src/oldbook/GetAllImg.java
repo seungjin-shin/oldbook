@@ -24,7 +24,7 @@ public class GetAllImg extends HttpServlet {
 		int entityLen = 0;
 		int i = 0;
 
-		resp.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("euc-kr");
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
 
@@ -33,7 +33,7 @@ public class GetAllImg extends HttpServlet {
 		List<Entity> entities = datastore.prepare(query).asList(
 				FetchOptions.Builder.withLimit(MAXARTICLENUM));
 
-		resp.getWriter().print("{\"myBookList\":{\"myBikeBoard\":[");
+		resp.getWriter().print("{\"myBikeList\":{\"myBikeBoard\":[");
 
 		entityLen = entities.size();
 		if (entities.isEmpty()) {
@@ -44,8 +44,8 @@ public class GetAllImg extends HttpServlet {
 				String jsonString;
 				OldBookGson myGson = new OldBookGson();
 				SaleImg img = new SaleImg();
-
 				img.setNum(entity.getProperty("num").toString());
+				img.setID(entity.getProperty("ID").toString());
 				img.setImage(entity.getProperty("image").toString());
 
 				jsonString = myGson.toJson(img);

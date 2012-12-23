@@ -6,7 +6,6 @@ public class SaleImg {
 	private String image;
 	private String ID;
 
-
 	public SaleImg(){}
 
 	public String getID() {
