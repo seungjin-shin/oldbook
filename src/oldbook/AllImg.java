@@ -16,7 +16,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
 
-public class GetAllImg extends HttpServlet {
+public class AllImg extends HttpServlet {
 	private final int MAXARTICLENUM = 500;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)

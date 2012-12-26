@@ -1,5 +1,6 @@
 package oldbook;
 
+import gson.MemberInfo;
 import gson.OldBookGson;
 import gson.SaleArticle;
 
@@ -9,8 +10,6 @@ import java.util.Date;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import OldBookManager.OldBookManager;
 
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
@@ -44,8 +43,8 @@ import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
-public class SaveArticle extends HttpServlet {
-	
+public class Member extends HttpServlet {
+	private final int MAXARTICLENUM = 500;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -85,4 +84,60 @@ public class SaveArticle extends HttpServlet {
 		
 		resp.getWriter().print("succeed save contents");
 	}
+	
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException {
+		int count = 0;
+		int i = 0;
+		String ID = req.getParameter("ID");
+
+		resp.setCharacterEncoding("UTF-8");
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+
+		Query query = new Query("sArticle").addSort("date",Query.SortDirection.DESCENDING);
+		List<Entity> entities = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(MAXARTICLENUM));
+		
+		resp.getWriter().print("{\"myBikeList\":{\"myBikeBoard\":[");
+		
+		if (entities.isEmpty()) {
+			resp.getWriter().print(ID + "null");
+		} else {
+			for (Entity entity : entities) {
+				if (ID.equals(entity.getProperty("ID").toString())) {
+					count++;
+				}
+			}
+		}
+		
+		entities = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(MAXARTICLENUM));
+		
+		for (Entity entity : entities) {
+			if (ID.equals(entity.getProperty("ID").toString())) {
+				i++;
+				String jsonString;
+				OldBookGson myGson = new OldBookGson();
+				MemberInfo member = new MemberInfo();
+				
+				member.setID(entity.getProperty("ID").toString());
+//				article.setTitle(entity.getProperty("title").toString());
+//				article.setPublisher(entity.getProperty("publisher")
+//						.toString());
+//				article.setPrice(entity.getProperty("price").toString());
+//				article.setCondition(entity.getProperty("condition")
+//						.toString());
+//				article.setMethod(entity.getProperty("method").toString());
+//				article.setContents(entity.getProperty("contents").toString());
+				
+				jsonString = myGson.toJson(member);
+				resp.getWriter().print(jsonString);
+				if(i != count)
+					resp.getWriter().print(",");
+			}
+		}
+		
+		resp.getWriter().print("]}}");
+
+	}
+	
 }

@@ -1,6 +1,6 @@
 package oldbook;
 
-import gson.Member;
+import gson.MemberInfo;
 import gson.OldBookGson;
 import gson.SaleArticle;
 
@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import OldBookManager.OldBookManager;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -31,7 +30,7 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
-public class GetAllArticle extends HttpServlet {
+public class AllArticle extends HttpServlet {
 	private final int MAXARTICLENUM = 500;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)

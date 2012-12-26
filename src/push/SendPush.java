@@ -1,6 +1,7 @@
 package push;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,48 +11,70 @@ import com.google.android.gcm.server.Constants;
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.Result;
 import com.google.android.gcm.server.Sender;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Query;
 
 public class SendPush extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		Sender sender = new Sender("696231272879");  //구글 코드에서 발급받은 서버 키
+		Sender sender = new Sender("AIzaSyC5hoQ5DzZ1Qtj-sBzrpc6NYEbE8b9KTBM");  //구글 코드에서 발급받은 서버 키
 		   Message msg = new Message.Builder()
-		   					.addData("dd", "dd")
+		   					.addData("push", "dd")
                             .build();
+		   
+		   DatastoreService datastore = DatastoreServiceFactory
+					.getDatastoreService();
 
-		   resp.getWriter().print("4debug");
-
+			Query query = new Query("Member").addSort("date",
+					Query.SortDirection.DESCENDING);
+			
+			List<Entity> entities = datastore.prepare(query).asList(
+					FetchOptions.Builder.withLimit(500));
+			if (entities.isEmpty()) {
+				resp.getWriter().print("null");
+			} else {
+				for (Entity entity : entities) {
+					//if ID == 같으면 GCM ID
+					String ID = entity.getProperty("GCMID").toString();
+					resp.getWriter().print(ID);
+				}
+			}
+		   
+		   
 		   //푸시 전송. 파라미터는 푸시 내용, 보낼 단말의 id, 마지막은 잘 모르겠음
 
-		   //Result result = sender.send(msg, "APA91bHzd3eOAbp2Ye3vZpwxk0U8qCcfHRECla_OGJeiWK4jcxA-1lvIBEH26TrC5bVs3ulRMYhiXHGCLMOY8N0W2FhdQDK7InykGRidODvFSN-0vbjd7pm1KjZdUmSSIQzP-sK7aPVX", 5);
-//
-//
-//		   //결과 처리
-//
-//		   if(result.getMessageId() != null) {
-//
-//		      //푸시 전송 성공
-//				resp.getWriter().print("succeed push");
-//
-//		   }
-//
-//		   else {
-//
-//		      String error = result.getErrorCodeName();   //에러 내용 받기
-//
-//
-//		      //에러 처리
-//
-//		      if(Constants.ERROR_INTERNAL_SERVER_ERROR.equals(error)) {
-//
-//		         //구글 푸시 서버 에러
-//		    	  resp.getWriter().print("google server error");
-//		      }
-//		      else
-//		    	  resp.getWriter().print(error);
-//		    	  
-//
-//		   }
+		   Result result = sender.send(msg, "APA91bHzd3eOAbp2Ye3vZpwxk0U8qCcfHRECla_OGJeiWK4jcxA-1lvIBEH26TrC5bVs3ulRMYhiXHGCLMOY8N0W2FhdQDK7InykGRidODvFSN-0vbjd7pm1KjZdUmSSIQzP-sK7aPVX", 5);
+
+
+		   //결과 처리
+
+		   if(result.getMessageId() != null) {
+
+		      //푸시 전송 성공
+				resp.getWriter().print("succeed push");
+
+		   }
+
+		   else {
+
+		      String error = result.getErrorCodeName();   //에러 내용 받기
+
+
+		      //에러 처리
+
+		      if(Constants.ERROR_INTERNAL_SERVER_ERROR.equals(error)) {
+
+		         //구글 푸시 서버 에러
+		    	  resp.getWriter().print("google server error");
+		      }
+		      else
+		    	  resp.getWriter().print(error);
+		    	  
+
+		   }
 	}
 }

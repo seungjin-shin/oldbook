@@ -1,68 +1,51 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	<servlet>
-		<servlet-name>OldBook</servlet-name>
-		<servlet-class>oldbook.OldBookServlet</servlet-class>
+		<servlet-name>AllArticle</servlet-name>
+		<servlet-class>oldbook.AllArticle</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>OldBook</servlet-name>
-		<url-pattern>/oldbook</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>SaveArticle</servlet-name>
-		<servlet-class>oldbook.SaveArticle</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>SaveArticle</servlet-name>
-		<url-pattern>/saveArticle</url-pattern>
+		<servlet-name>AllArticle</servlet-name>
+		<url-pattern>/allArticle</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>GetArticle</servlet-name>
-		<servlet-class>oldbook.GetArticle</servlet-class>
+		<servlet-name>Number</servlet-name>
+		<servlet-class>oldbook.Number</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>GetArticle</servlet-name>
-		<url-pattern>/getArticle</url-pattern>
+		<servlet-name>Number</servlet-name>
+		<url-pattern>/number</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>GetAllArticle</servlet-name>
-		<servlet-class>oldbook.GetAllArticle</servlet-class>
+		<servlet-name>AllImg</servlet-name>
+		<servlet-class>oldbook.AllImg</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>GetAllArticle</servlet-name>
-		<url-pattern>/getAllArticle</url-pattern>
+		<servlet-name>AllImg</servlet-name>
+		<url-pattern>/allImage</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>SaveImg</servlet-name>
-		<servlet-class>oldbook.SaveImg</servlet-class>
+		<servlet-name>Article</servlet-name>
+		<servlet-class>oldbook.Article</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>SaveImg</servlet-name>
-		<url-pattern>/saveImg</url-pattern>
+		<servlet-name>Article</servlet-name>
+		<url-pattern>/article</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>GetNum</servlet-name>
-		<servlet-class>oldbook.GetNum</servlet-class>
+		<servlet-name>Image</servlet-name>
+		<servlet-class>oldbook.Img</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>GetNum</servlet-name>
-		<url-pattern>/getNum</url-pattern>
+		<servlet-name>Image</servlet-name>
+		<url-pattern>/image</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>GetAllImg</servlet-name>
-		<servlet-class>oldbook.GetAllImg</servlet-class>
+		<servlet-name>Member</servlet-name>
+		<servlet-class>oldbook.Member</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>GetAllImg</servlet-name>
-		<url-pattern>/getAllImg</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>GetImg</servlet-name>
-		<servlet-class>oldbook.GetImg</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>GetImg</servlet-name>
-		<url-pattern>/getImg</url-pattern>
+		<servlet-name>Member</servlet-name>
+		<url-pattern>/member</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -76,7 +59,7 @@
 	
 	<servlet>
 		<servlet-name>viewImg</servlet-name>
-		<servlet-class>test.viewImg</servlet-class>
+		<servlet-class>view.viewImg</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>viewImg</servlet-name>
@@ -95,6 +78,7 @@
    <param-value/>
   </init-param>
  </servlet>
+ 
  
  <servlet-mapping>
   <servlet-name>SystemServiceServlet</servlet-name>
