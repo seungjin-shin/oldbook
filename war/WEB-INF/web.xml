@@ -66,6 +66,24 @@
 		<url-pattern>/viewImg</url-pattern>
 	</servlet-mapping>
 	
+	
+	
+	<servlet>
+		<servlet-name>Member Restful</servlet-name>
+		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>com.sun.jersey.config.property.packages</param-name>
+			<param-value>MemberRestful</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Member Restful</servlet-name>
+		<url-pattern>/oldBook/*</url-pattern>
+	</servlet-mapping>
+	
+	
+	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

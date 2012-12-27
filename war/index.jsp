@@ -14,8 +14,8 @@
         <title>Upload Test</title>
     </head>
     <body>
-        <form action="<%= blobstoreService.createUploadUrl("/image") %>" method="post" enctype="multipart/form-data">
-
+        
+		<form action="<%= blobstoreService.createUploadUrl("/member") %>" method="post" enctype="multipart/form-data">
 			<!-- <input type="text" name="title" >
 			<input type="text" name="author" >
 			<input type="text" name="publisher">
@@ -27,6 +27,11 @@
             <input type="text" name="ID" value="<%=ID%>">
 
             <input type="file" name="image">
+            
+            <input type="text" name="passwd" >
+            <input type="text" name="GCMID" >
+            <input type="text" name="name" >
+            <input type="text" name="phone">
 
             <input type="submit" value="Submit">
         </form>

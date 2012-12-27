@@ -48,96 +48,63 @@ public class Member extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
+
 		resp.setCharacterEncoding("UTF-8");
-		
-		String keyStr = "sArticle";
-		Key articleKey = KeyFactory.createKey("sArticle", keyStr);
-		
+
+		String keyStr = "member";
+		Key memberKey = KeyFactory.createKey("member", keyStr);
+
 		String num = req.getParameter("num");
 		String ID = req.getParameter("ID");
-		String title = req.getParameter("title");
-		String author = req.getParameter("author");
-		String publisher = req.getParameter("publisher");
-		String price = req.getParameter("price");
-		String condition = req.getParameter("condition");
-		String method = req.getParameter("method");
-		String contents = req.getParameter("contents");
+		String passwd = req.getParameter("passwd");
+		String name = req.getParameter("name");
+		String phone = req.getParameter("phone");
+		String GCMID = req.getParameter("GCMID");
 		Date date = new Date();
 
-		Entity entity = new Entity("sArticle", articleKey);
+		Entity entity = new Entity("Member", memberKey);
 		entity.setProperty("num", num);
 		entity.setProperty("ID", ID);
-		entity.setProperty("title", title);
-		entity.setProperty("author", author);
-		entity.setProperty("publisher", publisher);
-		entity.setProperty("price", price);
-		entity.setProperty("condition", condition);
-		entity.setProperty("method", method);
+		entity.setProperty("name", name);
+		entity.setProperty("passwd", passwd);
+		entity.setProperty("phone", phone);
+		entity.setProperty("GCMID", GCMID);
 		entity.setProperty("date", date);
-		entity.setProperty("contents", contents);
 
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
 		datastore.put(entity);
 
-		
-		resp.getWriter().print("succeed save contents");
+		resp.getWriter().print("succeed save Member");
 	}
-	
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		int count = 0;
-		int i = 0;
+		// ID 비교할때 모든 멤버와 비교해서 체크
+
 		String ID = req.getParameter("ID");
 
 		resp.setCharacterEncoding("UTF-8");
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
 
-		Query query = new Query("sArticle").addSort("date",Query.SortDirection.DESCENDING);
-		List<Entity> entities = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(MAXARTICLENUM));
-		
-		resp.getWriter().print("{\"myBikeList\":{\"myBikeBoard\":[");
-		
+		Query query = new Query("Member").addSort("date",
+				Query.SortDirection.DESCENDING);
+		List<Entity> entities = datastore.prepare(query).asList(
+				FetchOptions.Builder.withLimit(MAXARTICLENUM));
+
 		if (entities.isEmpty()) {
-			resp.getWriter().print(ID + "null");
+			resp.getWriter().print("ture");
+			return;
 		} else {
 			for (Entity entity : entities) {
 				if (ID.equals(entity.getProperty("ID").toString())) {
-					count++;
+					resp.getWriter().print("false");
+					return; // 같은 ID 존재하면 
 				}
 			}
 		}
-		
-		entities = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(MAXARTICLENUM));
-		
-		for (Entity entity : entities) {
-			if (ID.equals(entity.getProperty("ID").toString())) {
-				i++;
-				String jsonString;
-				OldBookGson myGson = new OldBookGson();
-				MemberInfo member = new MemberInfo();
-				
-				member.setID(entity.getProperty("ID").toString());
-//				article.setTitle(entity.getProperty("title").toString());
-//				article.setPublisher(entity.getProperty("publisher")
-//						.toString());
-//				article.setPrice(entity.getProperty("price").toString());
-//				article.setCondition(entity.getProperty("condition")
-//						.toString());
-//				article.setMethod(entity.getProperty("method").toString());
-//				article.setContents(entity.getProperty("contents").toString());
-				
-				jsonString = myGson.toJson(member);
-				resp.getWriter().print(jsonString);
-				if(i != count)
-					resp.getWriter().print(",");
-			}
-		}
-		
-		resp.getWriter().print("]}}");
-
+		resp.getWriter().print("true");
 	}
-	
+
 }

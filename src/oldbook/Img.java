@@ -123,4 +123,10 @@ public class Img extends HttpServlet {
 		resp.getWriter().print("]}}");
 
 	}
+	public void doPut(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException {
+		
+		resp.getWriter().print("putService");
+		
+	}
 }
