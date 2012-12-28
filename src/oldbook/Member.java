@@ -44,7 +44,7 @@ import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
 public class Member extends HttpServlet {
-	private final int MAXARTICLENUM = 500;
+	private final int MAXNUM = 500;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -54,7 +54,6 @@ public class Member extends HttpServlet {
 		String keyStr = "member";
 		Key memberKey = KeyFactory.createKey("member", keyStr);
 
-		String num = req.getParameter("num");
 		String ID = req.getParameter("ID");
 		String passwd = req.getParameter("passwd");
 		String name = req.getParameter("name");
@@ -63,7 +62,6 @@ public class Member extends HttpServlet {
 		Date date = new Date();
 
 		Entity entity = new Entity("Member", memberKey);
-		entity.setProperty("num", num);
 		entity.setProperty("ID", ID);
 		entity.setProperty("name", name);
 		entity.setProperty("passwd", passwd);
@@ -91,7 +89,7 @@ public class Member extends HttpServlet {
 		Query query = new Query("Member").addSort("date",
 				Query.SortDirection.DESCENDING);
 		List<Entity> entities = datastore.prepare(query).asList(
-				FetchOptions.Builder.withLimit(MAXARTICLENUM));
+				FetchOptions.Builder.withLimit(MAXNUM));
 
 		if (entities.isEmpty()) {
 			resp.getWriter().print("ture");

@@ -31,7 +31,7 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
 public class AllArticle extends HttpServlet {
-	private final int MAXARTICLENUM = 500;
+	private final int MAXNUM = 500;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
@@ -45,7 +45,7 @@ public class AllArticle extends HttpServlet {
 		Query query = new Query("sArticle").addSort("date",
 				Query.SortDirection.DESCENDING);
 		List<Entity> entities = datastore.prepare(query).asList(
-				FetchOptions.Builder.withLimit(MAXARTICLENUM));
+				FetchOptions.Builder.withLimit(MAXNUM));
 
 		resp.getWriter().print("{\"myBikeList\":{\"myBikeBoard\":[");
 

@@ -1,7 +1,6 @@
 package gson;
 
 public class MemberInfo {
-	private String num;
 	private String ID;
 	private String passwd;
 	private String name;
@@ -10,13 +9,6 @@ public class MemberInfo {
 	
 	public MemberInfo(){}
 	
-	public String getNum() {
-		return num;
-	}
-	
-	public void setNum(String num) {
-		this.num = num;
-	}
 	public String getGCMID() {
 		return GCMID;
 	}

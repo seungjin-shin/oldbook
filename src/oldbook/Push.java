@@ -1,8 +1,8 @@
 package oldbook;
 
 import gson.OldBookGson;
+import gson.PushInfo;
 import gson.SaleArticle;
-import gson.SaleImg;
 
 import java.io.IOException;
 import java.util.Date;
@@ -43,37 +43,34 @@ import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
-public class Img extends HttpServlet {
-	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+public class Push extends HttpServlet {
 	private final int MAXNUM = 500;
-	
+
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		resp.setCharacterEncoding("euc-kr");
+		resp.setCharacterEncoding("UTF-8");
 		
-		Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
-		BlobKey blobKey = blobs.get("image");
+		String keyStr = "PushInfo";
+		Key pushKey = KeyFactory.createKey("PushInfo", keyStr);
 		
-		String keyStr = "Image";
-		Key articleKey = KeyFactory.createKey("Image", keyStr);
-		
-		String num = req.getParameter("num");
 		String ID = req.getParameter("ID");
-		String image = blobKey.getKeyString();
+		String title = req.getParameter("title");
+		String phone = req.getParameter("phone");
 		Date date = new Date();
 
-		Entity entity = new Entity("Image", articleKey);
-		entity.setProperty("num", num);
+		Entity entity = new Entity("PushInfo", pushKey);
 		entity.setProperty("ID", ID);
-		entity.setProperty("image", image);
+		entity.setProperty("title", title);
 		entity.setProperty("date", date);
+		entity.setProperty("phone", phone);
 
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
 		datastore.put(entity);
+
 		
-		resp.getWriter().print("succeed save Img");
+		resp.getWriter().print("succeed save pushInfo");
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -86,7 +83,7 @@ public class Img extends HttpServlet {
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
 
-		Query query = new Query("Image").addSort("date",Query.SortDirection.DESCENDING);
+		Query query = new Query("PushInfo").addSort("date",Query.SortDirection.DESCENDING);
 		List<Entity> entities = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(MAXNUM));
 		
 		resp.getWriter().print("{\"myBikeList\":{\"myBikeBoard\":[");
@@ -108,14 +105,15 @@ public class Img extends HttpServlet {
 				i++;
 				String jsonString;
 				OldBookGson myGson = new OldBookGson();
-				SaleImg img = new SaleImg();
+				PushInfo pushInfo = new PushInfo();
 
-				img.setNum(entity.getProperty("num").toString());
-				img.setImage(entity.getProperty("image").toString());
-				img.setID(entity.getProperty("ID").toString());
-				jsonString = myGson.toJson(img);
+				pushInfo.setID(entity.getProperty("ID").toString());
+				pushInfo.setTitle(entity.getProperty("title").toString());
+				pushInfo.setPhone(entity.getProperty("phone").toString());
+				
+				jsonString = myGson.toJson(pushInfo);
 				resp.getWriter().print(jsonString);
-				if (i != count)
+				if(i != count)
 					resp.getWriter().print(",");
 			}
 		}
@@ -123,10 +121,6 @@ public class Img extends HttpServlet {
 		resp.getWriter().print("]}}");
 
 	}
-	public void doPut(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
-		
-		resp.getWriter().print("putService");
-		
-	}
+	
+	
 }

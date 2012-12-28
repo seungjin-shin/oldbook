@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -21,8 +22,8 @@ import com.google.appengine.api.datastore.Query;
 public class MemberRestful {
 	private final int MAXARTICLENUM = 500;
 	
-	@GET
-	@Path("info/ID={ID}&passwd={passwd}")
+	@PUT
+	@Path("changePasswd/ID={ID}&passwd={passwd}")
 	@Produces(MediaType.TEXT_HTML)
 	public String changePasswd(@PathParam("ID") final String ID,@PathParam("passwd") final String passwd) {
 
@@ -44,12 +45,38 @@ public class MemberRestful {
 					tmp.setProperty("passwd", passwd);
 					datastore.put(tmp);
 					
-					return "succed"; // 같은 ID 존재하면 
+					return "change succed";
 				}
 			}
 		}
-		return "failed";
-		
+		return "change failed";
+	}
+	
+	@GET
+	@Path("login/ID={ID}&passwd={passwd}")
+	@Produces(MediaType.TEXT_HTML)
+	public String loginChk(@PathParam("ID") final String ID,@PathParam("passwd") final String passwd) {
+
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+
+		Query query = new Query("Member").addSort("date",
+				Query.SortDirection.DESCENDING);
+		List<Entity> entities = datastore.prepare(query).asList(
+				FetchOptions.Builder.withLimit(MAXARTICLENUM));
+
+		if (entities.isEmpty()) {
+			return null;
+		} else {
+			for (Entity entity : entities) {
+				if (entity.getProperty("ID").toString().equals(ID)) {
+					if(entity.getProperty("passwd").toString().equals(passwd))
+						return "true";
+					break; 
+				}
+			}
+		}
+		return "false";
 	}
 	
 }

@@ -57,6 +57,5 @@ public class Number extends HttpServlet {
 			.getDatastoreService();
 	datastore2.put(entity);
 	
-	
 }
 }

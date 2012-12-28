@@ -43,7 +43,7 @@ import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
 public class Article extends HttpServlet {
-	private final int MAXARTICLENUM = 50;
+	private final int MAXNUM = 500;
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -95,7 +95,7 @@ public class Article extends HttpServlet {
 				.getDatastoreService();
 
 		Query query = new Query("sArticle").addSort("date",Query.SortDirection.DESCENDING);
-		List<Entity> entities = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(MAXARTICLENUM));
+		List<Entity> entities = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(MAXNUM));
 		
 		resp.getWriter().print("{\"myBikeList\":{\"myBikeBoard\":[");
 		
@@ -109,7 +109,7 @@ public class Article extends HttpServlet {
 			}
 		}
 		
-		entities = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(MAXARTICLENUM));
+		entities = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(MAXNUM));
 		
 		for (Entity entity : entities) {
 			if (ID.equals(entity.getProperty("ID").toString())) {
