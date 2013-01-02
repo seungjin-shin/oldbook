@@ -104,5 +104,4 @@ public class Member extends HttpServlet {
 		}
 		resp.getWriter().print("true");
 	}
-
 }

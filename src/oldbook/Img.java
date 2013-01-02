@@ -50,7 +50,7 @@ public class Img extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		resp.setCharacterEncoding("euc-kr");
+		resp.setCharacterEncoding("UTF-8");
 		
 		Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
 		BlobKey blobKey = blobs.get("image");
@@ -73,7 +73,23 @@ public class Img extends HttpServlet {
 				.getDatastoreService();
 		datastore.put(entity);
 		
-		resp.getWriter().print("succeed save Img");
+		resp.getWriter().println("<script language=\"javascript\">");
+		//resp.getWriter().print("document.write(window.navigator.appVersion);");
+		resp.getWriter().println("function winClose(){");
+		resp.getWriter().println("window.open(\"about:black\",\"_self\").close();}");
+		resp.getWriter().println("</script>");
+		
+		resp.getWriter().println("<html>");
+		resp.getWriter().println("<body>");
+        
+		resp.getWriter().println("<img src='/img/succeed.png'><br>");
+		resp.getWriter().println("<img src='/img/close.png' hspace='35' onclick=\"winClose()\">");
+		resp.getWriter().println("<input type=\"button\" value=\"windowopen닫기\" onclick=\"winClose()\">");
+		resp.getWriter().println("<a href=\"javascript:window.close()\">윈도우닫기</a>");
+		resp.getWriter().println("<a href=\"javascript:self.close()\">셀프닫기</a>");
+		resp.getWriter().println("</body>");
+		resp.getWriter().println("</html>");
+		
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -121,12 +137,5 @@ public class Img extends HttpServlet {
 		}
 		
 		resp.getWriter().print("]}}");
-
-	}
-	public void doPut(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
-		
-		resp.getWriter().print("putService");
-		
 	}
 }
