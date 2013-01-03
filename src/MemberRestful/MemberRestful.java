@@ -79,4 +79,28 @@ public class MemberRestful {
 		return "false";
 	}
 	
+	@GET
+	@Path("phoneInfo/ID={ID}")
+	@Produces(MediaType.TEXT_HTML)
+	public String loginInfo(@PathParam("ID") final String ID) {
+
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+
+		Query query = new Query("Member").addSort("date",
+				Query.SortDirection.DESCENDING);
+		List<Entity> entities = datastore.prepare(query).asList(
+				FetchOptions.Builder.withLimit(MAXARTICLENUM));
+
+		if (entities.isEmpty()) {
+			return null;
+		} else {
+			for (Entity entity : entities) {
+				if (entity.getProperty("ID").toString().equals(ID)) {
+					return entity.getProperty("phone").toString();
+				}
+			}
+		}
+		return "false";
+	}
 }

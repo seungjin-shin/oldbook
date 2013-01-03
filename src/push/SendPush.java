@@ -28,7 +28,7 @@ public class SendPush extends HttpServlet {
 		String GCMID = null;
 		String sellerID = req.getParameter("sellerID");
 		String myID = req.getParameter("myID");
-		String title = req.getParameter("title");
+		String title = req.getParameter("sellerTitle");
 		String phone = req.getParameter("phone");
 		
 		Message msg = new Message.Builder()
@@ -78,5 +78,6 @@ public class SendPush extends HttpServlet {
 			} else
 				resp.getWriter().print(error);
 		}
+		// 정보 저장하기
 	}
 }
