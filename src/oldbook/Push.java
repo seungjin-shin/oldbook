@@ -1,5 +1,6 @@
 package oldbook;
 
+import gson.MemberInfo;
 import gson.OldBookGson;
 import gson.PushInfo;
 import gson.SaleArticle;
@@ -54,16 +55,18 @@ public class Push extends HttpServlet {
 		String keyStr = "PushInfo";
 		Key pushKey = KeyFactory.createKey("PushInfo", keyStr);
 		
+		String sellerID = req.getParameter("sellerID");
 		String ID = req.getParameter("ID");
-		String title = req.getParameter("title");
-		String phone = req.getParameter("phone");
+		String title = req.getParameter("sellerTitle");
+		String number = req.getParameter("number");
 		Date date = new Date();
 
 		Entity entity = new Entity("PushInfo", pushKey);
+		entity.setProperty("sellerID", sellerID);
 		entity.setProperty("ID", ID);
 		entity.setProperty("title", title);
 		entity.setProperty("date", date);
-		entity.setProperty("phone", phone);
+		entity.setProperty("number", number);
 
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
@@ -92,7 +95,7 @@ public class Push extends HttpServlet {
 			resp.getWriter().print(ID + "null");
 		} else {
 			for (Entity entity : entities) {
-				if (ID.equals(entity.getProperty("ID").toString())) {
+				if (ID.equals(entity.getProperty("sellerID").toString())) {
 					count++;
 				}
 			}
@@ -101,15 +104,15 @@ public class Push extends HttpServlet {
 		entities = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(MAXNUM));
 		
 		for (Entity entity : entities) {
-			if (ID.equals(entity.getProperty("ID").toString())) {
+			if (ID.equals(entity.getProperty("sellerID").toString())) {
 				i++;
 				String jsonString;
 				OldBookGson myGson = new OldBookGson();
-				PushInfo pushInfo = new PushInfo();
+				MemberInfo pushInfo = new MemberInfo();
 
 				pushInfo.setID(entity.getProperty("ID").toString());
-				pushInfo.setTitle(entity.getProperty("title").toString());
-				pushInfo.setPhone(entity.getProperty("phone").toString());
+				pushInfo.setSellerTitle(entity.getProperty("title").toString());
+				pushInfo.setNumber(entity.getProperty("number").toString());
 				
 				jsonString = myGson.toJson(pushInfo);
 				resp.getWriter().print(jsonString);

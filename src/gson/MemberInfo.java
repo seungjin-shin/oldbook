@@ -4,11 +4,35 @@ public class MemberInfo {
 	private String ID;
 	private String passwd;
 	private String name;
-	private String phone;
+	private String number;
 	private String GCMID;
+	private String sellerID;
+	private String sellerTitle;
 	
 	public MemberInfo(){}
 	
+	public String getNumber() {
+		return number;
+	}
+	
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	public String getSellerID() {
+		return sellerID;
+	}
+	
+	public void setSellerID(String sellerID) {
+		this.sellerID = sellerID;
+	}
+	
+	public String getSellerTitle() {
+		return sellerTitle;
+	}
+	
+	public void setSellerTitle(String sellerTitle) {
+		this.sellerTitle = sellerTitle;
+	}
 	public String getGCMID() {
 		return GCMID;
 	}
@@ -27,12 +51,6 @@ public class MemberInfo {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
 	}
 	public String getPasswd() {
 		return passwd;

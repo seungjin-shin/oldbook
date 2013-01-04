@@ -84,9 +84,9 @@ public class Img extends HttpServlet {
         
 		resp.getWriter().println("<img src='/img/succeed.png'><br>");
 		resp.getWriter().println("<img src='/img/close.png' hspace='35' onclick=\"winClose()\">");
-		resp.getWriter().println("<input type=\"button\" value=\"windowopen닫기\" onclick=\"winClose()\">");
+		resp.getWriter().println("<!--<input type=\"button\" value=\"windowopen닫기\" onclick=\"winClose()\">");
 		resp.getWriter().println("<a href=\"javascript:window.close()\">윈도우닫기</a>");
-		resp.getWriter().println("<a href=\"javascript:self.close()\">셀프닫기</a>");
+		resp.getWriter().println("<a href=\"javascript:self.close()\">셀프닫기</a>-->");
 		resp.getWriter().println("</body>");
 		resp.getWriter().println("</html>");
 		

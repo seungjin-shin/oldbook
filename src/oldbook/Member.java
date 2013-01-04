@@ -81,7 +81,7 @@ public class Member extends HttpServlet {
 		// ID 비교할때 모든 멤버와 비교해서 체크
 
 		String ID = req.getParameter("ID");
-
+		
 		resp.setCharacterEncoding("UTF-8");
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
@@ -92,8 +92,9 @@ public class Member extends HttpServlet {
 				FetchOptions.Builder.withLimit(MAXNUM));
 
 		if (entities.isEmpty()) {
-			resp.getWriter().print("ture");
+			resp.getWriter().print("true");
 			return;
+			
 		} else {
 			for (Entity entity : entities) {
 				if (ID.equals(entity.getProperty("ID").toString())) {
